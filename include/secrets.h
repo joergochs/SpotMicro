@@ -3,6 +3,6 @@
 #define SECRETS_H
 
 #define SECRET_SSID "FBWS27 Gastzugang"
-#define SECRET_PASS "99test99"
+#define SECRET_PASS "xxxxxxxx"
 
 #endif // SECRETS_H
