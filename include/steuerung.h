@@ -8,5 +8,6 @@ void RGBLED(int r, int g, int b);
 void Gyroskop();
 void Ultraschall(int sensor);
 void UI_Mess();
+void scanI2C(long frequency);
 
 #endif // STEUERUNG_H

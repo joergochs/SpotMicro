@@ -41,10 +41,10 @@ char* toStr(int16_t value)
 
 void DisplayText(int servo, int angle)
 {
-  lcd.setCursor(2, 0);  //Set cursor to character 2 on line 0
+  lcd.setCursor(0, 0);  //Set cursor to character 2 on line 0
   lcd.print("Hello world!");
 
-  lcd.setCursor(2, 1);  //Move cursor to character 2 on line 1
+  lcd.setCursor(0, 1);  //Move cursor to character 2 on line 1
   lcd.print("LCD Tutorial");
 }   
 
@@ -141,4 +141,51 @@ float strom = rawVal * (3.3 / 4095.0); // Umrechnung in Strom (3.3V Referenz, 12
 Serial.print("Strom: ");
 Serial.print(strom, 2); // Ausgabe mit 2 Dezimalstellen
 Serial.println(" mA");   
+}
+
+void scanI2C(long frequency){
+  String normal = "standard mode (100 kHz):";
+  String fast = "fast mode (400 kHz):";
+  String fastPlus = "fast mode plus (1 MHz):";
+  String highSpeed = "high speed mode (3.4 MHz):";
+  String ultraSpeed = "ultra fast mode (5.0 MHz):";
+  String defaultStr = " !!!!! Unzulässige Frequenz !!!!!";
+  bool error = true;
+  bool addressFound = false;
+  Serial.print("Scanne im ");
+  switch(frequency){
+    case 100000:
+      Serial.println(normal);
+      break;
+    case 400000:
+      Serial.println(fast);
+      break;
+    case 1000000:
+      Serial.println(fastPlus);
+      break;
+    case 3400000:
+      Serial.println(highSpeed);
+      break;
+    case 5000000:
+      Serial.println(ultraSpeed);
+      break;
+    default:
+      Serial.println(defaultStr);
+      break;
+  }
+  
+  Wire.setClock(frequency);
+  for(int i=1; i<128; i++){
+    Wire.beginTransmission(i);
+    error = Wire.endTransmission();
+    if(error == 0){
+      addressFound = true;
+      Serial.print("0x");
+      Serial.println(i,HEX);
+    }
+  }
+  if(!addressFound){
+    Serial.println("Keine Adresse erkannt");
+  }
+  Serial.println();
 }

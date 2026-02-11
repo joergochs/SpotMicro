@@ -26,6 +26,8 @@ void setup() {
   kinematic_setup();
   steuerung_setup();
   
+  scanI2C(100000);
+  scanI2C(400000);
 
   RGBLED(255, 0, 0); // rot
   delay(1000);
