@@ -26,31 +26,58 @@ void setup() {
   kinematic_setup();
   steuerung_setup();
   
-  scanI2C(100000);
-  scanI2C(400000);
+  //scanI2C(100000);
+  //scanI2C(400000);
 
   RGBLED(255, 0, 0); // rot
   delay(1000);
   InitLegs();
-  DisplayText(0, 0);
+  DisplayText("SpotMicro", "Initialisiert");
   Gyroskop();
   RGBLED(0, 255, 0); // grün
-  Ultraschall(1);
-  Ultraschall(2);
-  UI_Mess();
 
 }
 
 void loop() {
 
-Legs_Hi_Li(1, -20);
-delay(1000);
-Legs_Hi_Li(0, -20);
-delay(1000);
-Legs_Hi_Li(1, 20);
-delay(1000);  
-Legs_Hi_Li(0, 20);
-delay(1000); 
+Ultraschall(1);
+Ultraschall(2);
+UI_Mess();
 
+Legs_Hi_Li(1, -20);
+delay(500);
+Legs_Hi_Li(0, -20);
+delay(500);
+Legs_Hi_Li(1, 20);
+delay(500);  
+Legs_Hi_Li(0, 20);
+delay(500); 
+
+Legs_Vo_Re(1, -20);
+delay(500);
+Legs_Vo_Re(0, -20);
+delay(500);
+Legs_Vo_Re(1, 20);
+delay(500);  
+Legs_Vo_Re(0, 20);
+delay(500); 
+
+Legs_Vo_Li(1, -20);
+delay(500);
+Legs_Vo_Li(0, -20);
+delay(500);
+Legs_Vo_Li(1, 20);
+delay(500);  
+Legs_Vo_Li(0, 20);
+delay(500); 
+
+Legs_Hi_Re(1, -20);
+delay(500);
+Legs_Hi_Re(0, -20);
+delay(500);
+Legs_Hi_Re(1, 20);
+delay(500);  
+Legs_Hi_Re(0, 20);
+delay(500); 
 
 }

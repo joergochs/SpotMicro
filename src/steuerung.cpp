@@ -39,13 +39,13 @@ char* toStr(int16_t value)
 
 // Funktionen für die Steuerung des Displays, der RGB-LED, des Gyroskops, der Ultraschallsensoren und der UI-Messung
 
-void DisplayText(int servo, int angle)
+void DisplayText(const String &line1, const String &line2)
 {
   lcd.setCursor(0, 0);  //Set cursor to character 2 on line 0
-  lcd.print("Hello world!");
+  lcd.print(line1);
 
   lcd.setCursor(0, 1);  //Move cursor to character 2 on line 1
-  lcd.print("LCD Tutorial");
+  lcd.print(line2);
 }   
 
 void RGBLED(int r, int g, int b)
@@ -130,17 +130,25 @@ switch(sensor) {
 void UI_Mess()
 {
 unsigned int rawVal = 0;
+char buffer1[16];
+char buffer2[16];
+
 rawVal = analogRead(U_MESS);
 float spannung = rawVal * (3.3 / 4095.0)*5; // Umrechnung in Spannung (3.3V Referenz, 12-bit ADC, Spannungsteiler 1:5)
 Serial.print("Spannung: ");
 Serial.print(spannung, 2); // Ausgabe mit 2 Dezimalstellen
 Serial.println(" V");   
+sprintf(buffer1, "Spannung: %.1f V", spannung);
 
 rawVal = analogRead(I_MESS);
 float strom = rawVal * (3.3 / 4095.0); // Umrechnung in Strom (3.3V Referenz, 12-bit ADC)
 Serial.print("Strom: ");
 Serial.print(strom, 2); // Ausgabe mit 2 Dezimalstellen
 Serial.println(" mA");   
+sprintf(buffer2, "Strom: %.2f mA", strom);
+
+DisplayText(String(buffer1), String(buffer2));
+
 }
 
 void scanI2C(long frequency){
